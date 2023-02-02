@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { merge, mergeMap, Observable } from 'rxjs';
@@ -10,7 +10,8 @@ import * as fromProductActions from '../../../state/products/products.actions';
 @Component({
   selector: 'app-product-view',
   templateUrl: './product-view.component.html',
-  styleUrls: ['./product-view.component.scss']
+  styleUrls: ['./product-view.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class ProductViewComponent implements OnInit {
@@ -39,7 +40,6 @@ export class ProductViewComponent implements OnInit {
           return this.store.select(entityById);
         })
       );
-      // this.product$.subscribe(res => console.log(res));
     } else {
       this.store.dispatch(
         fromProductActions.loadProductFailure({ error: "Unable to load the product" })
