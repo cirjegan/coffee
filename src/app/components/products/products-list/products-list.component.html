@@ -1,0 +1,16 @@
+<div class="product-list" *ngIf="productViewModel$ | async as productsData">
+  <div class="product" [routerLink]="['/product-view', product.id]"
+    *ngFor="let product of productsData.products | paginate: config">
+    <div class="product-image-holder">
+      <img src="https://via.placeholder.com/260x200?text={{product.blend_name}}" [alt]="product.blend_name"
+        class="product-image" />
+    </div>
+    <div class="product-blendname">
+      <p><b>Name:</b> {{ product.blend_name }}</p>
+    </div>
+  </div>
+</div>
+<div class="has-text-centered">
+  <pagination-controls id="productsPagination" [maxSize]="maxSize" [responsive]="responsive"
+    (pageChange)="onPageChange($event)"></pagination-controls>
+</div>

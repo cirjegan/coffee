@@ -1,0 +1,28 @@
+footer {
+    background-color: #555;
+    color: #bbb;
+    line-height: 1.5;
+
+    .ft-legal {
+        padding: 0.9375rem 1.875rem;
+        background-color: #333;
+
+        .ft-legal-list {
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+
+            li {
+                margin: 0.125rem 0.625rem;
+                white-space: nowrap;
+
+                &:nth-last-child(2) {
+                    flex: 1;
+                }
+            }
+        }
+    }
+}

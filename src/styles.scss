@@ -1,0 +1,21 @@
+body,
+html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Dosis', sans-serif;
+    background-color: whitesmoke;
+}
+
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+.container {
+    flex: 1;
+}
+
+.has-text-centered {
+    text-align: center;
+}
