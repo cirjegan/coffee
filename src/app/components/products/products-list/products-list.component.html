@@ -1,6 +1,5 @@
 <div class="product-list" *ngIf="productViewModel$ | async as productsData">
-  <div class="product" [routerLink]="['/product-view', product.id]"
-    *ngFor="let product of productsData.products | paginate: config">
+  <div class="product" [routerLink]="['/product-view', product.id]" *ngFor="let product of productsData.products">
     <div class="product-image-holder">
       <img src="https://via.placeholder.com/260x200?text={{product.blend_name}}" [alt]="product.blend_name"
         class="product-image" />
@@ -10,7 +9,16 @@
     </div>
   </div>
 </div>
+
 <div class="has-text-centered">
-  <pagination-controls id="productsPagination" [maxSize]="maxSize" [responsive]="responsive"
-    (pageChange)="onPageChange($event)"></pagination-controls>
+  <ul class="pagination">
+    <li class="pagination-previous" [ngClass]="paginate.firstPage ? 'disabled' : ''">
+      <a (click)="onPageChange(paginate.pageIndex - 1)" *ngIf="!paginate.firstPage">Previous</a>
+      <span *ngIf="paginate.firstPage"> Previous</span>
+    </li>
+    <li class="pagination-next" [ngClass]="paginate.lastPage ? 'disabled' : ''">
+      <a (click)="onPageChange(paginate.pageIndex + 1)" *ngIf="!paginate.lastPage">Next</a>
+      <span *ngIf="paginate.lastPage"> Next </span>
+    </li>
+  </ul>
 </div>

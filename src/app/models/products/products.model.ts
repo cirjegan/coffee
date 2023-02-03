@@ -12,11 +12,18 @@
 */
 
 export interface Product {
-    id: number;
-    uid: string;
-    blend_name: string;
-    origin: string;
-    variety: string;
-    notes: string;
-    intensifier: string;
+  id: number;
+  uid: string;
+  blend_name: string;
+  origin: string;
+  variety: string;
+  notes: string;
+  intensifier: string;
+}
+
+export interface PageQuery {
+  pageIndex: number;
+  pageSize: number;
+  firstPage: boolean;
+  lastPage: boolean;
 }

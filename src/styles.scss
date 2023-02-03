@@ -19,3 +19,79 @@ body {
 .has-text-centered {
     text-align: center;
 }
+
+.pagination {
+    margin-left: 0;
+    margin-bottom: 1rem;
+
+    &:before,
+    &:after {
+        content: " ";
+        display: table
+    }
+
+    &:after {
+        clear: both
+    }
+
+    li {
+        margin-right: .0625rem;
+        border-radius: 0;
+        display: inline-block;
+    }
+
+    a,
+    button {
+        color: #0a0a0a;
+        display: block;
+        padding: .1875rem .625rem;
+        border-radius: 0;
+        cursor: pointer;
+
+        &:hover {
+            background: #e6e6e6
+        }
+
+    }
+
+    .current {
+        padding: .1875rem .625rem;
+        background: #2199e8;
+        color: #fefefe;
+        cursor: default;
+    }
+
+    .disabled {
+        padding: .1875rem .625rem;
+        color: #cacaca;
+        cursor: default;
+
+        &:hover {
+            background: transparent
+        }
+    }
+
+    .pagination-previous {
+
+        a,
+        &.disabled {
+            &:before {
+                content: "\ab";
+                display: inline-block;
+                margin-right: .5rem;
+            }
+        }
+    }
+
+    .pagination-next {
+
+        a,
+        &.disabled {
+            &:after {
+                content: "\bb";
+                display: inline-block;
+                margin-left: .5rem
+            }
+        }
+    }
+}

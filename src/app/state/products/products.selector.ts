@@ -22,15 +22,19 @@ export interface ProductsViewModel {
   products: ProductModel.Product[];
 }
 
-export const selectProductsViewModel = createSelector(
-  selectAllProducts,
-  (
-    products: ProductModel.Product[]
-  ): ProductsViewModel => {
+export const selectProductsViewModel = (props: ProductModel.PageQuery) =>
+  createSelector(selectAllProducts, (products: ProductModel.Product[]): ProductsViewModel => {
+    const startIndex = props.pageIndex * props.pageSize;
+    const pageEnd = startIndex + props.pageSize;
     return {
-      products: products
+      products: products.slice(startIndex, pageEnd),
     };
   }
+  );
+
+export const selectProductsCount = createSelector(
+  selectAllProducts,
+  allResults => allResults.length
 );
 
 /** Checking whether the Product already exists in State */

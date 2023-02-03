@@ -12,7 +12,6 @@ import { productsReducer } from './state/products/products.reducer';
 import { ProductsEffects } from './state/products/products.effects';
 import { HttpClientModule } from '@angular/common/http';
 import { HeaderComponent } from './components/header/header.component';
-import { NgxPaginationModule } from 'ngx-pagination';
 import { FooterComponent } from './components/footer/footer.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { AlertModule } from '@full-fledged/alerts';
@@ -50,7 +49,6 @@ import { AlertEffects } from './state/shared/alert.effects';
       AlertEffects
     ]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
-    NgxPaginationModule,
     NgxSpinnerModule.forRoot({ type: 'ball-scale-multiple' }),
     AlertModule.forRoot({ maxMessages: 5, timeout: 5000, positionX: 'right', positionY: 'top' })
   ],

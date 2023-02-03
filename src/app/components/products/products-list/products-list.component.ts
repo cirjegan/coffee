@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
-import { PaginationInstance } from 'ngx-pagination';
 import { Observable, Subscription } from 'rxjs';
-import { Product } from 'src/app/models/products/products.model';
 import { AppState } from 'src/app/state/app.state';
+
 import * as ProductActions from 'src/app/state/products/products.actions';
 import * as ProductSelector from 'src/app/state/products/products.selector';
+import * as ProductsModel from 'src/app/models/products/products.model';
 
 @Component({
   selector: 'app-products-list',
@@ -14,23 +14,31 @@ import * as ProductSelector from 'src/app/state/products/products.selector';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProductsListComponent implements OnInit, OnDestroy {
-  allProducts$: Observable<Product[]>;
-
-  config: PaginationInstance = {
-    id: 'productsPagination',
-    itemsPerPage: 10,
-    currentPage: 1
-  };
-  maxSize = 0;
-  responsive = false;
+  allProducts$: Observable<ProductsModel.Product[]>;
 
   productViewModel$: Observable<ProductSelector.ProductsViewModel>;
   productSubscription: Subscription;
 
+  productsCount$: Observable<number>;
+  productsCount: number;
+  productsCountSubscription: Subscription;
+
+  paginate: ProductsModel.PageQuery = {
+    pageIndex: 0,
+    pageSize: 10,
+    firstPage: true,
+    lastPage: false
+  };
+
   constructor(private store: Store<AppState>) { }
 
   ngOnInit() {
-    this.productViewModel$ = this.store.pipe(select(ProductSelector.selectProductsViewModel));
+    this.productsCount$ = this.store.pipe(select(ProductSelector.selectProductsCount));
+    this.productsCountSubscription = this.productsCount$.subscribe((res) => {
+      this.productsCount = res;
+    });
+
+    this.loadProductsBasedOnPagination();
     this.productSubscription = this.productViewModel$.subscribe((res) => {
       if (res.products.length == 0) {
         this.store.dispatch(ProductActions.loadProducts());
@@ -38,11 +46,21 @@ export class ProductsListComponent implements OnInit, OnDestroy {
     });
   }
 
-  onPageChange(number: number) {
-    this.config.currentPage = number;
+  loadProductsBasedOnPagination() {
+    this.productViewModel$ = this.store.pipe(select(ProductSelector.selectProductsViewModel(this.paginate)));
+  }
+
+  onPageChange(newPageIndex: number) {
+    this.paginate.pageIndex = newPageIndex;
+    this.loadProductsBasedOnPagination();
+
+    const totalPages = this.productsCount / this.paginate.pageSize;
+    this.paginate.firstPage = newPageIndex == 0 ? true : false;
+    this.paginate.lastPage = (totalPages - 1) == newPageIndex ? true : false;
   }
 
   ngOnDestroy() {
     this.productSubscription && this.productSubscription.unsubscribe();
+    this.productsCountSubscription && this.productsCountSubscription.unsubscribe();
   }
 }
