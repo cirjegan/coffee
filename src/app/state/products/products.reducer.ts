@@ -9,7 +9,7 @@ export interface State extends EntityState<Product> {
   error: any;
 }
 
-export const adapter: EntityAdapter<Product> = createEntityAdapter<Product>({});
+export const adapter: EntityAdapter<Product> = createEntityAdapter<Product>();
 
 export const initialState: State = adapter.getInitialState({
   error: null,
@@ -20,7 +20,7 @@ export const productsReducer = createReducer(
   on(ProductActions.loadProductsSuccess, (state, action) =>
     adapter.setAll(action.products, {
       ...state,
-      products: action.products
+      error: null
     })
   ),
   on(

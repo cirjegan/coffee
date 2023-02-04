@@ -17,7 +17,7 @@ export class ProductsEffects {
     this.actions$.pipe(
       ofType(ProductActions.loadProducts),
       switchMap(() =>
-        from(this.productsService.getPosts()).pipe(
+        from(this.productsService.getProducts()).pipe(
           map((data) =>
             ProductActions.loadProductsSuccess({ products: data })
           ),

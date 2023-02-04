@@ -12,7 +12,7 @@ export class ProductsService {
 
   constructor(private http: HttpClient) { }
 
-  getPosts(): Observable<Product[]> {
+  getProducts(): Observable<Product[]> {
     return this.http
       .get<Product[]>(`https://random-data-api.com/api/coffee/random_coffee?size=50`);
   }

@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ProductsListComponent } from './products-list.component';
+import { StoreModule } from '@ngrx/store';
 
 describe('ProductsListComponent', () => {
   let component: ProductsListComponent;
@@ -8,9 +9,10 @@ describe('ProductsListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ProductsListComponent ]
+      imports: [StoreModule.forRoot({})],
+      declarations: [ProductsListComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(ProductsListComponent);
     component = fixture.componentInstance;
