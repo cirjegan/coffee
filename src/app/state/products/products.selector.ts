@@ -38,14 +38,11 @@ export const selectProductsCount = createSelector(
 );
 
 /** Checking whether the Product already exists in State */
-export const entityExists = (props: string) =>
-  createSelector(selectAllEntities, (state): boolean => {
-    return state[props] == undefined ? false : true;
-  }
-  );
+export const entityExists = (props: number) => createSelector(
+  selectAllProducts,
+  state => (state.filter(product => product.id == props).length > 0) ? true : false);
 
 /** Retrieve the product based on id */
-export const selectEntityById = (props: string) =>
-  createSelector(selectAllEntities, (state): ProductModel.Product => {
-    return state[props]!;
-  });
+export const selectEntityById = (props: number) => createSelector(
+  selectAllProducts,
+  state => state.find(product => product.id == props)!);

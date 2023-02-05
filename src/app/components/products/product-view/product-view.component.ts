@@ -17,16 +17,17 @@ import * as fromProductActions from '../../../state/products/products.actions';
 export class ProductViewComponent implements OnInit {
   product$: Observable<Product>;
   isProductInStore$: Observable<boolean>;
-  productId: string;
+  productId: number;
 
   constructor(private route: ActivatedRoute, private router: Router, private store: Store<AppState>) { }
 
   ngOnInit() {
-    this.productId = this.route.snapshot.paramMap.get('id') || '';
+    this.productId = Number(this.route.snapshot.paramMap.get('id')) || 0;
 
     if (this.productId) {
       const entitySelector = fromProductSelectors.entityExists(this.productId);
       this.isProductInStore$ = this.store.select(entitySelector);
+      console.log(this.isProductInStore$);
 
       const entityById = fromProductSelectors.selectEntityById(this.productId);
 
@@ -36,8 +37,10 @@ export class ProductViewComponent implements OnInit {
             this.store.dispatch(
               fromProductActions.loadProductFailure({ error: "Unable to load the product" })
             );
+            return [];
+          } else {
+            return this.store.select(entityById);
           }
-          return this.store.select(entityById);
         })
       );
     } else {
